@@ -114,8 +114,8 @@ namespace Smod2.API
 		{
 			get
 			{
-				float num = Magnitude;
-				if (num > 9.99999974737875E-06) return this / num;
+				float length = Magnitude;
+				if (length > 9.99999974737875E-06) return this / length;
 
 				return Zero;
 			}
@@ -123,13 +123,18 @@ namespace Smod2.API
 
 		public static Vector operator +(Vector a, float b)
 		{
-			return new Vector(a.x + b, a.y + b, a.z + b);
+			float length = Magnitude;
+			if (length > 9.99999974737875E-06) return a*((length + b)/length);
+			
+			return Zero;
 		}
-		public static Vector operator +(float a, Vector b) => b + a;
 
 		public static Vector operator -(Vector a, float b)
 		{
-			return new Vector(a.x - b, a.y - b, a.z - b);
+			float length = Magnitude;
+			if (length > 9.99999974737875E-06) return a*((length - b)/length);
+			
+			return Zero;
 		}
 
 		public static Vector operator *(Vector a, float b)
