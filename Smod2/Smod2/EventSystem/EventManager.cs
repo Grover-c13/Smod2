@@ -1,12 +1,20 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Smod2.EventHandlers;
 
 namespace Smod2.Events
 {
-
-
-	public enum Priority {Highest = 100, High = 80, Normal = 50, Low = 20, Lowest = 0};
+	public enum Priority
+	{
+		FIRST = 0,
+		EARLIER = 20,
+		EARLY = 40,
+		NORMAL = 50,
+		LATE = 60,
+		LATER = 70,
+		LAST = 90,
+		MONITOR = 100
+	};
 
 	public class EventManager
 	{
@@ -50,7 +58,7 @@ namespace Smod2.Events
 			}
 		}
 
-		public void AddEventHandlers(Plugin plugin, IEventHandler handler, Priority priority = Priority.Normal)
+		public void AddEventHandlers(Plugin plugin, IEventHandler handler, Priority priority = Priority.NORMAL)
 		{
 			foreach(Type intfce in handler.GetType().GetInterfaces()) {
 				if (typeof(IEventHandler).IsAssignableFrom(intfce))
@@ -61,7 +69,7 @@ namespace Smod2.Events
 			}
 		}
 
-		public void AddEventHandler(Plugin plugin, Type eventType, IEventHandler handler, Priority priority = Priority.Normal)
+		public void AddEventHandler(Plugin plugin, Type eventType, IEventHandler handler, Priority priority = Priority.NORMAL)
 		{
 			plugin.Debug(string.Format("Adding event handler from: {0} type: {1} priority: {2} handler: {3}", plugin.Details.name, eventType, priority, handler.GetType()));
 			EventHandlerWrapper wrapper = new EventHandlerWrapper(plugin, priority, handler);
@@ -94,7 +102,6 @@ namespace Smod2.Events
 				meta.Add(wrapper);
 				// Doing this stuff on register instead of when the event is called for events that trigger lots (OnUpdate etc)
 				meta.Sort(priorityCompare);
-				meta.Reverse();
 			}
 		}
 
