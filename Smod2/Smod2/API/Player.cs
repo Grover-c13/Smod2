@@ -140,6 +140,11 @@ namespace Smod2.API
 		public abstract void Ban(int duration);
 		public abstract void Ban(int duration, string message);
 		public abstract Item GiveItem(ItemType type);
+		/// <summary>
+		/// Return the amount of items in a player's inventory
+		/// </summary>
+		/// <returns></returns>
+		public abstract int GetInventoryCount();
 		public abstract List<Item> GetInventory();
 		public abstract Item GetCurrentItem();
 		public abstract void SetCurrentItem(ItemType type);
